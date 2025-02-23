@@ -13,7 +13,7 @@ interface ColorPickerProps {
   customClasses: string;
 }
 
-const GradientPicker: React.FC<ColorPickerProps> = ({
+const ColorPicker: React.FC<ColorPickerProps> = ({
   defaultValue = "#ffffff",
   onChange,
   customClasses = "colorPicker",
@@ -281,4 +281,4 @@ const GradientPicker: React.FC<ColorPickerProps> = ({
   );
 };
 
-export default GradientPicker;
+export default ColorPicker;

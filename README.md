@@ -1,20 +1,20 @@
 # Installation
 
 Using npm:
-`npm i react-gradient-picker`
+`npm i react-colorify`
 
 Using yarn:
-`yarn add react-gradient-picker`
+`yarn add react-colorify`
 
 # Usage
 
 First import the component:
-`import { GradientPicker } from "react-gradient-picker";`
+`import { ColorPicker } from "react-colorify";`
 
 Then use it anywhere in your project:
 
 ```jsx
-<GradientPicker
+<ColorPicker
   customClasses="flex w-full mx-auto items-center justify-center h-[400px]"
   defaultValue={color}
   onChange={setColor}
@@ -33,4 +33,4 @@ The component is fully customizable. You can pass custom classes to the componen
 
 Other than you can also use the default class "`colorPicker`" to style the component.
 
-For any queries or issues, please create an issue on the [GitHub repository](https://github.com/sunnybundel/react-gradient-picker/issues).
+For any queries or issues, please create an issue on the [GitHub repository](https://github.com/sunnybundel/react-colorify/issues).

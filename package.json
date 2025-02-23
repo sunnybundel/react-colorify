@@ -1,5 +1,5 @@
 {
-  "name": "react-gradient-picker",
+  "name": "react-colorify",
   "version": "0.0.1",
   "description": "A compact gradient and color picker library optimized for React, offering a fast and lag-free color selection experience with highly customizable options.",
   "keywords": [
@@ -29,7 +29,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sunnybundel/react-gradient-picker.git"
+    "url": "git+https://github.com/sunnybundel/react-colorify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sunnybundel/react-colorify/issues"
   },
   "scripts": {
     "build-rollup": "rollup -c",
@@ -43,9 +46,9 @@
     "react-colorful": "^5.6.1"
   },
   "peerDependencies": {
-    "@types/react-dom": "^19.0.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@types/react-dom": ">=16.14.0",
+    "react": ">=16.14.0",
+    "react-dom": ">=16.14.0"
   },
   "devDependencies": {
     "@babel/preset-react": "^7.26.3",

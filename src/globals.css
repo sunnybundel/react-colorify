@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.react-colorful {
+  width: 240px !important;
+  height: 200px !important;
+}
+.react-colorful__saturation {
+  border-bottom: 0px solid #000 !important;
+}
+.react-colorful > div > div > .react-colorful__pointer {
+  width: 18px !important;
+  height: 18px !important;
+}
+.react-colorful > .react-colorful__hue {
+  margin-top: 1rem;
+  height: 6px;
+  border-radius: 0.5rem !important;
+}
+.react-colorful > .react-colorful__alpha {
+  margin-top: 1rem;
+  height: 6px;
+  border-radius: 0.5rem !important;
+  margin-bottom: 0.5rem;
+}
+.react-colorful__pointer-fill {
+  background-color: #000 !important;
+}
+
+.modal {
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  opacity: 1; /* Initial state */
+  visibility: visible; /* Make it visible */
+}
+
+.modal-hidden {
+  opacity: 0; /* Fade out */
+  visibility: hidden; /* Prevent interaction */
+}

@@ -1,5 +1,5 @@
 "use client";
-import "./globals.css";
+import "./globals.scss";
 
 import React, { useEffect, useRef, useState } from "react";
 import { HexAlphaColorPicker } from "react-colorful";
@@ -22,9 +22,13 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
-  const [color, setColor] = useState<string>(defaultValue);
+  const [color, setColor] = useState<string>(
+    defaultValue === "transparent" ? "#ffffff00" : defaultValue
+  );
   const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
-  const defaultColor = useRef(defaultValue);
+  const defaultColor = useRef(
+    defaultValue === "transparent" ? "#ffffff00" : defaultValue
+  );
 
   const handleColorChange = (newColor: string) => {
     setColor(newColor);
@@ -141,7 +145,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   };
 
   return (
-    <div className={customClasses}>
+    <div className={`react-colorify ${customClasses}`}>
       <div
         className="relative flex items-center justify-center"
         ref={colorPickerRef}
@@ -155,10 +159,9 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
             className="h-6 w-6 rounded ring-1 ring-gray-200"
             style={{
               backgroundColor: color,
-              border: color === "transparent" ? "1px solid #000" : "inherit",
-              //Also add a diagonal line to indicate transparent color
+              border: color === "#ffffff00" ? "1px solid #000" : "inherit",
               background:
-                color === "transparent"
+                color === "#ffffff00"
                   ? `linear-gradient(to top left,
              rgba(0,0,0,0) 0%,
              rgba(0,0,0,0) calc(50% - 0.8px),
@@ -166,14 +169,14 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
              rgba(0,0,0,0) calc(50% + 0.8px),
              rgba(0,0,0,0) 100%)`
                   : color,
-              opacity: color === "transparent" ? 0.2 : 1,
+              opacity: color === "#ffffff00" ? 0.2 : 1,
             }}
           />
         </button>
         {isVisible && (
           <ModalPortal>
             <div
-              className={`z-100 absolute ${customClasses}`}
+              className={`react-colorify react-colorify-z-100 z-100 absolute react-colorify-absolute ${customClasses}`}
               style={{
                 top: modalPosition.top + 20,
                 left: modalPosition.left,
@@ -181,6 +184,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
               ref={modalRef}
             >
               <div className="z-50 rounded-md border bg-white p-4 shadow-md">
+                {/* For Future Feature Reference
                 <div className="mb-2 flex items-center justify-between rounded-md bg-slate-200">
                   <button
                     className="w-1/2 rounded-md rounded-r-none bg-slate-300 px-3 py-2 text-sm font-medium"
@@ -194,7 +198,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                   >
                     Gradient
                   </button>
-                </div>
+                </div> */}
                 <div className="picker">
                   <HexAlphaColorPicker
                     color={color}
@@ -213,14 +217,28 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                         type="text"
                         size={7}
                         value={color}
-                        onChange={(e) => handleColorChange(e.target.value)}
+                        onChange={(e) => {
+                          const newColor = e.target.value;
+                          if (newColor.length <= 9) {
+                            const isValidColor =
+                              /^#([0-9A-F]{3}){1,2}$/i.test(newColor) ||
+                              /^#([0-9A-F]{4}){1,2}$/i.test(newColor);
+                            if (isValidColor) {
+                              handleColorChange(newColor);
+                            } else {
+                              setColor(newColor);
+                            }
+                          } else {
+                            setColor(defaultColor.current);
+                          }
+                        }}
                         className="my-auto flex-1 text-left text-sm uppercase text-gray-500 bg-transparent border-none outline-none w-full"
                       />
                     </div>
                     <div className="flex w-1/2 gap-1 rounded-md bg-slate-200 p-2 font-medium">
                       <p className="my-auto flex-1 text-left text-sm uppercase text-gray-500">
                         {Math.round(
-                          (parseInt(color.slice(1, 3), 16) / 255) * 100
+                          (parseInt(color.slice(7, 9) || "FF", 16) / 255) * 100
                         )}{" "}
                         <span className="float-right">%</span>
                       </p>

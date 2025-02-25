@@ -7,7 +7,6 @@ import typescript from "@rollup/plugin-typescript";
 import autoprefixer from "autoprefixer";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
-import tailwindcss from "tailwindcss";
 
 export default [
   {
@@ -29,13 +28,18 @@ export default [
       external(),
       nodeResolve({
         extensions: [".ts", ".tsx"],
-        skip: ["react", "react-dom"], //Remove as its unsupported
-        ignoreGlobal: false, //Remove as its unsupported
       }),
       postcss({
-        extract: true,
+        use: [
+          [
+            "sass",
+            {
+              includePaths: ["./src/"],
+            },
+          ],
+        ],
         minimize: true,
-        plugins: [tailwindcss(), autoprefixer()],
+        plugins: [autoprefixer()],
       }),
       babel({
         babelHelpers: "bundled",

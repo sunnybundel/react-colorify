@@ -1,6 +1,6 @@
 {
   "name": "react-colorify",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A compact gradient and color picker library optimized for React, offering a fast and lag-free color selection experience with highly customizable options.",
   "keywords": [
     "react",

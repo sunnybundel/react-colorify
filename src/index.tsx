@@ -151,6 +151,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
         ref={colorPickerRef}
       >
         <button
+          className="unset"
           aria-label="Open color picker"
           onClick={handleColor}
           ref={buttonRef}
@@ -252,7 +253,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                       <button
                         aria-label={`Increment color ${i}`}
                         key={`increment-${i}`}
-                        className="h-4 w-4 cursor-pointer rounded-sm border"
+                        className="unset h-4 w-4 cursor-pointer rounded-sm border"
                         style={generateColorStyles(color, i * 10)}
                       />
                     ))}
@@ -263,7 +264,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                       <button
                         aria-label={`Decrement color ${i}`}
                         key={`decrement-${i}`}
-                        className="h-4 w-4 cursor-pointer rounded-sm border"
+                        className="unset h-4 w-4 cursor-pointer rounded-sm border"
                         style={generateColorStyles(color, -i * 10)}
                       />
                     ))}
@@ -271,7 +272,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                 </div>
                 <button
                   onClick={resetColor}
-                  className="mx-auto flex items-center gap-1 pt-4 text-sm font-semibold"
+                  className="unset mx-auto flex items-center gap-1 pt-4 text-sm font-semibold"
                   type="button"
                 >
                   <svg

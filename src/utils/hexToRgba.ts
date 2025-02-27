@@ -32,6 +32,18 @@ export const generateColorStyles = (baseColor: string, increment: number) => {
 
   const { r, g, b, a } = hexToRgba(processedColor, 1);
 
+  // If color is transparent or invalid
+  // if (a === 0) {
+  //   return {
+  //     background: `linear-gradient(to top left,
+  //        rgba(0,0,0,0, 0.2) 0%,
+  //        rgba(0,0,0,0, 0.2) calc(50% - 0.8px),
+  //        rgba(0,0,0,1, 0.2) 50%,
+  //        rgba(0,0,0,0, 0.2) calc(50% + 0.8px),
+  //        rgba(0,0,0,0, 0.2) 100%)`,
+  //   };
+  // }
+
   return {
     backgroundColor: `rgba(${Math.min(255, r + increment)}, ${Math.min(
       255,

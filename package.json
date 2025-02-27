@@ -1,6 +1,6 @@
 {
   "name": "react-colorify",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A compact gradient and color picker library optimized for React, offering a fast and lag-free color selection experience with highly customizable options.",
   "keywords": [
     "react",
@@ -12,7 +12,11 @@
     "color",
     "picker",
     "hex",
-    "rgba"
+    "rgba",
+    "color picker",
+    "color-picker",
+    "react-color-picker",
+    "react color picker"
   ],
   "license": "MIT",
   "author": "Sunny Bundel",

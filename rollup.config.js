@@ -53,7 +53,11 @@ export default [
         "process.env.NODE_ENV": '"development"',
       }),
       typescript(),
-      terser(),
+      terser({
+        format: {
+          preamble: "'use client';",
+        },
+      }),
     ],
     external: ["react", "react-dom"], // Mark these as external explicitly
   },

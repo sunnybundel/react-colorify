@@ -1,7 +1,7 @@
 "use client";
 import "./globals.scss";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { HexAlphaColorPicker } from "react-colorful";
 
 import ModalPortal from "./components/ModalPortal";
@@ -10,13 +10,13 @@ import { generateColorStyles } from "./utils/hexToRgba";
 interface ColorPickerProps {
   defaultValue: string;
   onChange: (color: string) => void;
-  customClasses: string;
+  customClasses?: string;
 }
 
-const ColorPicker: React.FC<ColorPickerProps> = ({
+const Colorify: React.FC<ColorPickerProps> = ({
   defaultValue = "#ffffff",
   onChange,
-  customClasses = "colorPicker",
+  customClasses = "",
 }) => {
   const colorPickerRef = useRef<HTMLDivElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
@@ -61,7 +61,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     return false;
   };
 
-  const updateModalPosition = () => {
+  const updateModalPosition = useCallback(() => {
     if (isVisible && buttonRef.current) {
       if (!checkButtonVisibility()) {
         setIsVisible(false);
@@ -87,7 +87,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
         });
       }
     }
-  };
+  }, [isVisible, buttonRef.current?.getBoundingClientRect()]);
 
   const handleColorClickOutside = (event: MouseEvent) => {
     if (
@@ -108,6 +108,15 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     }
     setIsVisible(!isVisible);
   };
+
+  const [isTransparent, setIsTransparent] = useState(false);
+  useEffect(() => {
+    if (color.length > 7 && color.endsWith("00")) {
+      setIsTransparent(true);
+    } else {
+      setIsTransparent(false);
+    }
+  }, [color]);
 
   useEffect(() => {
     if (isVisible) {
@@ -133,7 +142,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
     return () => {
       if (buttonRef.current) resizeObserver.unobserve(buttonRef.current);
     };
-  }, [buttonRef?.current?.getBoundingClientRect()]);
+  }, [updateModalPosition]);
 
   const resetColor = () => {
     setColor(defaultColor.current);
@@ -145,7 +154,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   };
 
   return (
-    <div className={`react-colorify ${customClasses}`}>
+    <div className={`react-colorify colorify-picker ${customClasses}`}>
       <div
         className="relative flex items-center justify-center"
         ref={colorPickerRef}
@@ -157,27 +166,26 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
           ref={buttonRef}
         >
           <div
-            className="h-6 w-6 rounded ring-1 ring-gray-200"
+            className="h-6 w-6 rounded"
             style={{
               backgroundColor: color,
-              border: color === "#ffffff00" ? "1px solid #000" : "inherit",
-              background:
-                color === "#ffffff00"
-                  ? `linear-gradient(to top left,
+              border: isTransparent ? "1px solid #000" : "1px solid #d1d5db",
+              background: isTransparent
+                ? `linear-gradient(to top left,
              rgba(0,0,0,0) 0%,
              rgba(0,0,0,0) calc(50% - 0.8px),
              rgba(0,0,0,1) 50%,
              rgba(0,0,0,0) calc(50% + 0.8px),
              rgba(0,0,0,0) 100%)`
-                  : color,
-              opacity: color === "#ffffff00" ? 0.2 : 1,
+                : color,
+              opacity: isTransparent ? 0.2 : 1,
             }}
           />
         </button>
         {isVisible && (
           <ModalPortal>
             <div
-              className={`react-colorify react-colorify-z-100 z-100 absolute react-colorify-absolute ${customClasses}`}
+              className={`react-colorify colorify-modal react-colorify-z-100 z-100 absolute react-colorify-absolute ${customClasses}`}
               style={{
                 top: modalPosition.top + 20,
                 left: modalPosition.left,
@@ -253,7 +261,7 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
                       <button
                         aria-label={`Increment color ${i}`}
                         key={`increment-${i}`}
-                        className="unset h-4 w-4 cursor-pointer rounded-sm border"
+                        className="unset h-4 w-4 cursor-pointer rounded-sm border border-color-200"
                         style={generateColorStyles(color, i * 10)}
                       />
                     ))}
@@ -300,4 +308,4 @@ const ColorPicker: React.FC<ColorPickerProps> = ({
   );
 };
 
-export default ColorPicker;
+export default Colorify;

@@ -94,9 +94,9 @@ To further customize the UI of the color picker, you can manually override the s
 
 For any queries, issues or new feature requests, please create an issue on the [GitHub repository](https://github.com/sunnybundel/react-colorify/issues).
 
-#Changelog
+# Changelog
 
-### 0.2.1
+#### 0.2.1
 
 - Change prop name `customClass` to `className`.
 - Add support for labelFor prop to add the functionality of clicking on the label to open the color picker.

@@ -10,16 +10,18 @@ import { generateColorStyles } from "./utils/hexToRgba";
 interface ColorPickerProps {
   defaultValue: string;
   onChange: (color: string) => void;
-  customClasses?: string;
+  className?: string;
+  labelFor?: string;
 }
 
 const Colorify: React.FC<ColorPickerProps> = ({
   defaultValue = "#ffffff",
   onChange,
-  customClasses = "",
+  className = "",
+  labelFor,
 }) => {
   const colorPickerRef = useRef<HTMLDivElement | null>(null);
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const buttonRef = useRef<HTMLDivElement | null>(null);
   const modalRef = useRef<HTMLDivElement | null>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
   const [color, setColor] = useState<string>(
@@ -36,6 +38,27 @@ const Colorify: React.FC<ColorPickerProps> = ({
       onChange(newColor);
     }
   };
+
+  useEffect(() => {
+    // This is the useEffect for the labelFor prop
+    if (!labelFor) return;
+    const labelElement = document.querySelector(`label[for="${labelFor}"]`);
+    const handleClick = () => {
+      if (buttonRef.current) {
+        buttonRef.current.click();
+      }
+    };
+
+    if (labelElement) {
+      labelElement.addEventListener("click", handleClick);
+    }
+
+    return () => {
+      if (labelElement) {
+        labelElement.removeEventListener("click", handleClick);
+      }
+    };
+  }, [labelFor]);
 
   const checkButtonVisibility = () => {
     if (buttonRef.current) {
@@ -154,38 +177,32 @@ const Colorify: React.FC<ColorPickerProps> = ({
   };
 
   return (
-    <div className={`react-colorify colorify-picker ${customClasses}`}>
-      <div
-        className="relative flex items-center justify-center"
-        ref={colorPickerRef}
-      >
-        <button
-          className="unset"
+    <div className={`react-colorify`}>
+      <div ref={colorPickerRef}>
+        <div
+          className={`unset relative flex items-center justify-center mx-auto h-6 w-6 rounded colorify-picker ${className}`}
           aria-label="Open color picker"
           onClick={handleColor}
           ref={buttonRef}
-        >
-          <div
-            className="h-6 w-6 rounded"
-            style={{
-              backgroundColor: color,
-              border: isTransparent ? "1px solid #000" : "1px solid #d1d5db",
-              background: isTransparent
-                ? `linear-gradient(to top left,
+          id={labelFor}
+          style={{
+            backgroundColor: color,
+            border: isTransparent ? "1px solid #000" : "1px solid #d1d5db",
+            background: isTransparent
+              ? `linear-gradient(to top left,
              rgba(0,0,0,0) 0%,
              rgba(0,0,0,0) calc(50% - 0.8px),
              rgba(0,0,0,1) 50%,
              rgba(0,0,0,0) calc(50% + 0.8px),
              rgba(0,0,0,0) 100%)`
-                : color,
-              opacity: isTransparent ? 0.2 : 1,
-            }}
-          />
-        </button>
+              : color,
+            opacity: isTransparent ? 0.2 : 1,
+          }}
+        ></div>
         {isVisible && (
           <ModalPortal>
             <div
-              className={`react-colorify colorify-modal react-colorify-z-100 z-100 absolute react-colorify-absolute ${customClasses}`}
+              className={`react-colorify colorify-modal react-colorify-z-100 z-100 absolute react-colorify-absolute`}
               style={{
                 top: modalPosition.top + 20,
                 left: modalPosition.left,

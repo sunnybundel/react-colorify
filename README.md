@@ -96,7 +96,11 @@ For any queries, issues or new feature requests, please create an issue on the [
 
 # Changelog
 
-#### 0.2.1
+#### v0.2.3
+
+- Minor package.json bug fix.
+
+#### v0.2.2
 
 - Change prop name `customClass` to `className`.
 - Add support for labelFor prop to add the functionality of clicking on the label to open the color picker.

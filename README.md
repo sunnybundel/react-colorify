@@ -96,6 +96,11 @@ For any queries, issues or new feature requests, please create an issue on the [
 
 # Changelog
 
+###v0.2.4
+
+- Minor bug fixes.
+- Updated dependencies.
+
 #### v0.2.3
 
 - Minor package.json bug fix.

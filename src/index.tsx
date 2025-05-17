@@ -186,7 +186,6 @@ const Colorify: React.FC<ColorPickerProps> = ({
           ref={buttonRef}
           id={labelFor}
           style={{
-            backgroundColor: color,
             border: isTransparent ? "1px solid #000" : "1px solid #d1d5db",
             background: isTransparent
               ? `linear-gradient(to top left,
